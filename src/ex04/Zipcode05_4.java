@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,8 +20,10 @@ class  ZipcodeMap implements Ipo {
 	FileReader        fr;
 	BufferedReader    br;
 	
-	Map<String, Integer>  sidoMap = new TreeMap<>(); 
-	int               totCnt = 0;
+	Map<String, Integer>  sidoMap  =  new TreeMap<>(); 
+	int                   totCnt   =  0;
+	
+	List<String>          sidos    =  new  ArrayList<>();  // 순서유지용 배열
 	
 	@Override
 	public void input(String fname) throws IOException {
@@ -27,11 +31,18 @@ class  ZipcodeMap implements Ipo {
 		fr  =  new FileReader( fname );
 		br  =  new BufferedReader( fr );
 		
+		String   prevSido = "";
+		
 		br.readLine();
 		String line = "";
-		while( (line = br.readLine()) != null ) {
+		while( (line = br.readLine()) != null ) {			
 			PostVo   vo       =  new PostVo( line );
 			String   sido     =  vo.getSido();
+			
+			if( !sido.equals( prevSido ) ) {
+				sidos.add( sido );
+				prevSido = sido;
+			}
 			
 			sidoMap.put( sido, sidoMap.getOrDefault( sido, 0 ) + 1 );
 			totCnt++;
@@ -50,6 +61,7 @@ class  ZipcodeMap implements Ipo {
 	@Override
 	public void output() {
 		
+		/*
 		for (Map.Entry<String, Integer> sidoList : sidoMap.entrySet()) {
 			String   key  = sidoList.getKey();
 			Integer  val  = sidoList.getValue();
@@ -57,6 +69,14 @@ class  ZipcodeMap implements Ipo {
 			System.out.println( key + "=" + val  );
 			
 		}
+		*/
+		
+		for (String sido : sidos) {
+			int     val   =  sidoMap.get( sido  );
+			System.out.println( sido + "=" + val  );
+		}
+		
+		
 		System.out.println( "총 " + totCnt + " 건"  );
 		
 	}
