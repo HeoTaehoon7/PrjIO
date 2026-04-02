@@ -21,12 +21,10 @@ public class Zipcode04 {
 		System.out.println("검색할시도를 입력하세요(부산, 대구, 경남)");
 		String           sidos      =  in.nextLine();  //  "부산, 대구, 경남"   
 		String   []      sis        =  sidos.trim().split(",");        
-		String   []      sidoList   =  new  String[ sis.length  ];
 		int      []      cnt        =  new  int[ sis.length ];
 		
-		for (int i = 0; i < sidoList.length; i++) {
+		for (int i = 0; i < sis.length; i++) {
 			sis[i]      =  sis[i].trim();
-			sidoList[i] =  sis[i];
 			cnt[i]      =  0;
 		}		
 		
